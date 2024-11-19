@@ -1,28 +1,36 @@
 $("#add_user").submit(function(event){
-    //alert("Data inserted Successfully!")
-    event.preventDefault();
+    event.preventDefault(); // Prevent form from submitting automatically
 
-    // Check if all required fields are filled
-    let isValid = true;
+    // Collect input values
+    const name = $("input[name='name']").val().trim();
+    const email = $("input[name='email']").val().trim();
+    const gender = $("input[name='gender']:checked").val();
+    const status = $("input[name='status']:checked").val();
 
-    // Loop through all input fields in the form
-    $("#add_user input").each(function () {
-        if ($(this).val().trim() === "") {
-            isValid = false;
-            // Highlight the empty field (optional)
-            $(this).css("border", "1px solid red");
-        } else {
-            $(this).css("border", ""); // Reset border if field is filled
+    // Check for required fields
+    if (!name || !email || !gender || !status) {
+        alert("All fields are required! Please fill out the form completely.");
+        return; // Stop further execution
+    }
+
+    // If validation passes, submit the form
+    $.ajax({
+        url: "/api/users",
+        method: "POST",
+        data: {
+            name: name,
+            email: email,
+            gender: gender,
+            status: status
+        },
+        success: function(response) {
+            alert("Data inserted Successfully!");
+            window.location.href = "/"; // Redirect to the homepage or another page
+        },
+        error: function(err) {
+            alert("An error occurred while inserting data.");
         }
     });
-
-    if (isValid) {
-        alert("Data inserted Successfully!");
-        // You can proceed with the form submission if needed
-        this.submit(); // Submit the form after validation
-    } else {
-        alert("Please fill all required fields.");
-    }
 })
 
 $("#update_user").submit(function(event){

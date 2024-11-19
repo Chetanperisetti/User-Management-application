@@ -3,8 +3,8 @@ var Userdb=require('../model/model');
 //create and save new user
 exports.create=(req,res)=>{
     //validate request
-    if(!req.body){
-        res.status(400).send({message:'Content cannot be empty'})
+    if(!req.body&& !req.body.email && !req.body.gender && !req.body.status){
+        res.status(400).send({message:"All fields (name, email, gender, and status) are required."})
         return;
     }
     //new user

@@ -230,3 +230,7 @@ opacity: 0;
     background-color: var(--dark);
     color: var(--border);
 }
+.error-border {
+    border: 2px solid red;
+    outline: none;
+}
